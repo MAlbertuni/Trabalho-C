@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-const int tamanhoVetorAlunos = 3; //constante com tamanho do vetor dos alunos para facilitar nos meu testes
+const int tamanhoVetorAlunos = 3; // constante com tamanho do vetor dos alunos para facilitar nos meu testes
 
 struct Endereco // estrutura do endereço
 {
@@ -26,10 +26,10 @@ struct Aluno // estrutura do aluno
 {
     char nome[25];
     int RA;
-    //char dataNascimento[10];
-    //Endereco endereco1;
-    //Endereco endereco2;
-    //Materia materia[5];
+    // char dataNascimento[10];
+    // Endereco endereco1;
+    // Endereco endereco2;
+    // Materia materia[5];
 };
 typedef struct Aluno Aluno;
 
@@ -71,7 +71,7 @@ bool VerificaDisponibilidade(ArrayDinamico *arrayDinamico)
     return 1;
 }
 
-//se array estiver cheio, aumentamos 2 vezes o seu tamanho.
+// se array estiver cheio, aumentamos 2 vezes o seu tamanho.
 void aumentarArrayDinamico(ArrayDinamico *arrayDinamico)
 {
     int *temp = arrayDinamico->dados;
@@ -86,7 +86,7 @@ void aumentarArrayDinamico(ArrayDinamico *arrayDinamico)
     free(temp);
 }
 
-//diminuir o tamanho do array pela metade quando tiver 1/4 ou 25% cheio
+// diminuir o tamanho do array pela metade quando tiver 1/4 ou 25% cheio
 void diminuirArrayDinamico(ArrayDinamico *arrayDinamico)
 {
     if ((arrayDinamico->quantidade < arrayDinamico->tamanho / 4) && (arrayDinamico->tamanho >= 4))
@@ -115,7 +115,7 @@ void imprimeArray(const ArrayDinamico *arrayDinamico)
 
 void ordenaArray(const ArrayDinamico *arrayDinamico)
 {
-    //Implemente
+    // Implemente
 }
 
 void adicionarArray(ArrayDinamico *arrayDinamico, Aluno *aluno)
@@ -173,6 +173,7 @@ int quantidadeArray(const ArrayDinamico *arrayDinamico)
     return arrayDinamico->quantidade;
 }
 
+// implementar leitura do arquivo e depois passar para o ponteiro
 void carregarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo)
 {
     FILE *file = fopen("aalunos.txt", "rb");
@@ -183,6 +184,7 @@ void carregarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo)
     fclose(file);
 }
 
+// gravar dados do ponteiro no arquivo
 void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo)
 {
     FILE *file = fopen("alunos.txt", "wb");
@@ -206,11 +208,11 @@ void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo)
 
 Aluno *criarAluno(int ra, char *nome)
 {
-    Aluno *aluno01 = (Aluno *)malloc(1 * sizeof(Aluno *));
-    aluno01->RA = ra;
-    strcpy(aluno01->nome, nome);
+    Aluno *aluno = (Aluno *)malloc(1 * sizeof(Aluno *));
+    aluno->RA = ra;
+    strcpy(aluno->nome, nome);
 
-    return aluno01;
+    return aluno;
 }
 
 Aluno *buscarAluno(ArrayDinamico *arrayDinamico, int index)
@@ -225,66 +227,103 @@ void imprimeAluno(Aluno *aluno)
 
 void main() // metodo principal
 {
-    int tamanho = 0;
-    bool ordenado = false;
+    int tamanho = 4; // tamanhos pré-definidos
+    bool ordenado = false;// no começo ele não vai ser ordenado
+    ArrayDinamico *arrayDinamico = criaArryaDinamico(tamanho, ordenado);// cria o ponteiro de Array Dinamico
 
-    ArrayDinamico *arrayDinamico;
-
-    char nomeAluno[30];
-    int raAluno;
-    //free(aluno);
-    //destroiArrayDinamico(&arrayDinamico);
-
-    int escolha = 0;
-    while (escolha != 6) //menu que funciona até escolherem o 6
+    int escolha = 0;//int da escolha do menu
+    while (escolha != 13) // menu que funciona até escolherem o 13
     {
         printf("Menu de Operacoes\n");
-        printf("1 - Criar array dinamico.\n");
-        printf("2 - Salvar novo aluno.\n");
-        printf("3 - Buscar aluno por index.\n");
-        printf("4 - Diminuir index do array.\n");
-        printf("5 - Imprimir todos os alunos.\n");
-        printf("6 - Sair da aplicacao.\n");
+        printf("1 - Salvar novo aluno.\n");
+        printf("2 - Buscar aluno por index.\n");
+        printf("3 - Remover aluno do array.\n");
+        printf("4 - Imprimir todos os alunos.\n");
+        printf("5 - Ordenar vetor dos alunos.\n");
+        printf("6 - Acessar index do vetor.\n");
+        printf("7 - Acessar index existente do vetor.\n");
+        printf("8 - Aumentar vetor.\n");
+        printf("9 - Diminuir vetor.\n");
+        printf("10 - Checar tamanho do vetor.\n");
+        printf("11 - Checar quantidade no vetor.\n");
+        printf("12 - Salvar no arquivo.\n");
+        printf("13 - Sair.\n");
         scanf("%d", &escolha);
         switch (escolha)
         {
-        case 1:
-            printf("Qual será o tamanho do array?\n");
-            scanf("%d", &tamanho);
-            arrayDinamico = criaArryaDinamico(tamanho, ordenado);
-            break;
-        case 2:
+        case 1://salvar novo aluno
+            char nomeAluno[30];//nome
+            int raAluno;//RA
             printf("Digite o nome do aluno:\n");
-            gets(nomeAluno);
+            gets(nomeAluno);//pega a string com o nome do aluno
             printf("Digite o RA do aluno:\n");
-            scanf("%d", raAluno);
+            scanf("%d", &raAluno);//pega o RA do aluno
 
-            Aluno *aluno = (Aluno *)malloc(1 * sizeof(Aluno *));
-            aluno = criarAluno(raAluno, nomeAluno);
-            adicionarArray(arrayDinamico, aluno);
+            Aluno *aluno = (Aluno *)malloc(1 * sizeof(Aluno *));//cria o ponteiro de estrutura Aluno
+            aluno = criarAluno(raAluno, nomeAluno);//aqui dentro ele salva no endereço da Memoria o nome e RA
+            if (VerificaDisponibilidade(arrayDinamico) == 1)//ve se tem espaço para armazenar novo aluno
+            {//aqui é se está lotado o array
+                aumentarArrayDinamico(arrayDinamico);//dobramos o tamanho dele
+            }
+            adicionarArray(arrayDinamico, aluno);//adiciona o ponteiro do aluno dentro do array dinamico
             break;
-        case 3:
+        case 2://procurar aluno no array
             printf("Digite o index que deseja acessar:\n");
             int index;
-            scanf("%d", index);
-            aluno = buscarAluno(arrayDinamico, index);
-            imprimeAluno(aluno);
+            scanf("%d", &index);//pega o index do aluno
+            Aluno *alunoProcura = (Aluno *)malloc(1 * sizeof(Aluno *));//cria o ponteiro de estrutura Aluno
+            alunoProcura = buscarAluno(arrayDinamico, index);//procura o index dentro do array
+            imprimeAluno(alunoProcura);//imprime as informações que foram salvas no aluno pelo retorno
             break;
-        case 4:
+        case 3://apagar index do array
             printf("Digite o index que deseja apagar:\n");
             int index;
-            scanf("%d", index);
-            removeArray(arrayDinamico, index);
+            scanf("%d", &index);//pega qual o index
+            removeArray(arrayDinamico, index);//remove o index e reorganiza para diinuir posição
             printf("Index com aluno removido!");
             break;
-        case 5:
+        case 4://aqui imprime os alunos do array
             imprimeArray(arrayDinamico);
             break;
-        case 6:
-            printf("Saindo...");
-            system("pause");
+        case 5://aqui ordena os alunos no array
+            ordenaArray(arrayDinamico);
             break;
-        default:
+        case 6://verifica se uma posição existe no array
+            printf("Digite o index que deseja verificar se existe:\n");
+            int index;
+            scanf("%d", &index);//pega posição
+            acessarArray(arrayDinamico, index);//acessa o array na posição
+            break;
+        case 7://verifica se uma posição do array possui algum aluno salvo
+            printf("Digite o index que deseja verificar se possui dados:\n");
+            int index;
+            scanf("%d", &index);//pega a posição
+            acessarVerificado(arrayDinamico, index);//ve se na posição algum aluno existe
+            break;
+        case 8://aumenta o tamanho do array
+            aumentarArrayDinamico(arrayDinamico);
+            break;
+        case 9://diminui o tamanho do array
+            diminuirArrayDinamico(arrayDinamico);
+            break;
+        case 10://verifica o tamanho que o array está no momento
+            printf("O array possui tamanho %d", tamanhoArray(arrayDinamico));
+            break;
+        case 11://verificar quantos alunos possuimos no array no momento
+            printf("O array possui quantidade %d", quantidadeArray(arrayDinamico));
+            break;
+        case 12://salva no arquivo os alunos
+            char caminhoArquivo[250];
+            printf("Digite o caminho do arquivo a ser salvo:\n");
+            gets(caminhoArquivo);
+            gravarArquivo(arrayDinamico, &caminhoArquivo);
+            break;
+        case 13://destroi o array dinamico e apaga ele da memoria e sai do programa
+            destroiArrayDinamico(&arrayDinamico);
+            system("pause");
+            exit(1);
+            break;
+        default://default
             printf("Essa opcao nao existe!");
             break;
         }
