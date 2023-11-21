@@ -160,7 +160,6 @@ void ordenaArray(void **array, int p, int r, int (*compare)(const void *, const 
 void imprimeArray(ArrayDinamico *arrayDinamico, int qtdInfo) // fiz o parametro qtdInfo para simplificar na hora de buscar ou remover, apenas quando pela opcao do menu for selecionado imprimir alunos ele imprime todas as informacoes
 {
     system("cls");
-    system("clear");
 
     ordenaArray((void **)arrayDinamico->ptr_dados, 0, arrayDinamico->quantidade - 1, comparaAlunoNome); // ordena antes de imprimir
     printf("Imprimindo alunos:\n");
@@ -172,29 +171,29 @@ void imprimeArray(ArrayDinamico *arrayDinamico, int qtdInfo) // fiz o parametro 
             printf("\n------------------------------\n");
             printf("Aluno %d\nNome: %s\nRA: %d\nData de Nascimento: %s\nEndereco 1:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s \n Bairro: %s\nEndereco 2:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s\n Bairro: %s\nMateria 1 - Nome: %s | Media: %f\nMateria 2 - Nome: %s | Media: %f\nMateria 3 - Nome: %s | Media: %f\nMateria 4 - Nome: %s | Media: %f\nMateria 5 - Nome: %s | Media: %f\n",
                    i,
-                   aluno->nome,
-                   aluno->RA,
-                   aluno->dataNascimento,
-                   aluno->endereco1.rua,
-                   aluno->endereco1.numeroCasa,
-                   aluno->endereco1.estado,
-                   aluno->endereco1.cidade,
-                   aluno->endereco1.bairro,
-                   aluno->endereco2.rua,
-                   aluno->endereco2.numeroCasa,
-                   aluno->endereco2.estado,
-                   aluno->endereco2.cidade,
-                   aluno->endereco2.bairro,
-                   aluno->materia[0].nomeMateria,
-                   aluno->materia[0].mediaMateria,
-                   aluno->materia[1].nomeMateria,
-                   aluno->materia[1].mediaMateria,
-                   aluno->materia[2].nomeMateria,
-                   aluno->materia[2].mediaMateria,
-                   aluno->materia[3].nomeMateria,
-                   aluno->materia[3].mediaMateria,
-                   aluno->materia[4].nomeMateria,
-                   aluno->materia[4].mediaMateria);
+                   arrayDinamico->ptr_dados[i]->nome,
+                   arrayDinamico->ptr_dados[i]->RA,
+                   arrayDinamico->ptr_dados[i]->dataNascimento,
+                   arrayDinamico->ptr_dados[i]->endereco1.rua,
+                   arrayDinamico->ptr_dados[i]->endereco1.numeroCasa,
+                   arrayDinamico->ptr_dados[i]->endereco1.estado,
+                   arrayDinamico->ptr_dados[i]->endereco1.cidade,
+                   arrayDinamico->ptr_dados[i]->endereco1.bairro,
+                   arrayDinamico->ptr_dados[i]->endereco2.rua,
+                   arrayDinamico->ptr_dados[i]->endereco2.numeroCasa,
+                   arrayDinamico->ptr_dados[i]->endereco2.estado,
+                   arrayDinamico->ptr_dados[i]->endereco2.cidade,
+                   arrayDinamico->ptr_dados[i]->endereco2.bairro,
+                   arrayDinamico->ptr_dados[i]->materia[0].nomeMateria,
+                   arrayDinamico->ptr_dados[i]->materia[0].mediaMateria,
+                   arrayDinamico->ptr_dados[i]->materia[1].nomeMateria,
+                   arrayDinamico->ptr_dados[i]->materia[1].mediaMateria,
+                   arrayDinamico->ptr_dados[i]->materia[2].nomeMateria,
+                   arrayDinamico->ptr_dados[i]->materia[2].mediaMateria,
+                   arrayDinamico->ptr_dados[i]->materia[3].nomeMateria,
+                   arrayDinamico->ptr_dados[i]->materia[3].mediaMateria,
+                   arrayDinamico->ptr_dados[i]->materia[4].nomeMateria,
+                   arrayDinamico->ptr_dados[i]->materia[4].mediaMateria);
             printf("\n------------------------------\n");
         }
         else // apenas o essencial aqui
@@ -294,21 +293,18 @@ void carregarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo) // impl
 
 void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo) // grava dados do ponteiro no arquivo
 {
-    FILE *file;
-
-    file = fopen(caminhoArquivo, "wb"); // Abre o arquivo em modo de escrita binária
+    FILE *file = fopen(caminhoArquivo, "wb"); // Abre o arquivo em modo de escrita binária
     if (file == NULL)
     {
         printf("\nErro ao salvar no arquivo.\n");
         return;
     }
 
-    ordenaArray((void **)arrayDinamico->ptr_dados, 0, arrayDinamico->quantidade - 1, comparaAlunoNome); // ordena antes de salvar no arquivo
-
     int i;
     // Escreve os dados dos alunos no arquivo
     for (i = 0; i < arrayDinamico->quantidade; i++)
     {
+        printf("Entrou");
         fwrite(&arrayDinamico->ptr_dados[i], sizeof(Aluno), 1, file);
     }
 
@@ -318,11 +314,10 @@ void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo) // grava 
 void imprimeAluno(Aluno *aluno)
 {
     system("cls");
-    system("clear");
 
     if (aluno != NULL)
     {
-        printf("Nome: %s\nRA: %d\nData de Nascimento: %s\nEndereco 1:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s \n Bairro: %s\nEndereco 2:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s\n Bairro: %s\nMateria 1 - Nome: %s | Media: %f\nMateria 2 - Nome: %s | Media: %f\nMateria 3 - Nome: %s | Media: %f\nMateria 4 - Nome: %s | Media: %f\nMateria 5 - Nome: %s | Media: %f\n",
+        printf("Nome: %s\nRA: %d\nData de Nascimento: %s\nEndereco 1:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s \n Bairro: %s \nEndereco 2:\n Rua: %s\n Numero Casa: %d\n Estado: %s\n Cidade: %s\n Bairro: %s\nMateria 1 - Nome: %s | Media: %f\nMateria 2 - Nome: %s | Media: %f\nMateria 3 - Nome: %s | Media: %f\nMateria 4 - Nome: %s | Media: %f\nMateria 5 - Nome: %s | Media: %f\n",
                aluno->nome,
                aluno->RA,
                aluno->dataNascimento,
@@ -349,16 +344,28 @@ void imprimeAluno(Aluno *aluno)
     }
 }
 
+char *ajustarString(char *str)
+{ // metodo que peguei com o Jhom para evitar erros na hora de salvar as "strings" no array
+    int tamanho = strlen(str);
+
+    if (str[tamanho - 1] == '\n')
+    {
+        str[tamanho - 1] = '\0';
+    }
+
+    return str;
+}
+
 void menuCriarAluno(ArrayDinamico *arrayDinamico)
 {
     system("cls");
-    system("clear");
 
     Aluno *aluno = (Aluno *)malloc(1 * sizeof(Aluno *)); // cria aluno
     int raAluno;
 
     // salva informacoes abaixo
     printf("Digite o nome do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->nome, sizeof(aluno->nome), stdin);
     strcpy(aluno->nome, ajustarString(aluno->nome));
 
@@ -376,10 +383,10 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     }
 
     printf("Digite a data de nascimento do aluno:\n");
-    fgets(aluno->dataNascimento, sizeof(aluno->dataNascimento), stdin);
-    strcpy(aluno->dataNascimento, ajustarString(aluno->dataNascimento));
+    scanf("%s", &aluno->dataNascimento);
 
     printf("Digite a rua 1 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco1.rua, sizeof(aluno->endereco1.rua), stdin);
     strcpy(aluno->endereco1.rua, ajustarString(aluno->endereco1.rua));
 
@@ -387,18 +394,22 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     scanf("%d", &aluno->endereco1.numeroCasa);
 
     printf("Digite o bairro 1 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco1.bairro, sizeof(aluno->endereco1.bairro), stdin);
     strcpy(aluno->endereco1.bairro, ajustarString(aluno->endereco1.bairro));
 
     printf("Digite a cidade 1 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco1.cidade, sizeof(aluno->endereco1.cidade), stdin);
     strcpy(aluno->endereco1.cidade, ajustarString(aluno->endereco1.cidade));
 
     printf("Digite o estado 1 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco1.estado, sizeof(aluno->endereco1.estado), stdin);
     strcpy(aluno->endereco1.estado, ajustarString(aluno->endereco1.estado));
 
     printf("Digite a rua 2 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco2.rua, sizeof(aluno->endereco2.rua), stdin);
     strcpy(aluno->endereco2.rua, ajustarString(aluno->endereco2.rua));
 
@@ -406,18 +417,22 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     scanf("%d", &aluno->endereco2.numeroCasa);
 
     printf("Digite o bairro 2 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco2.bairro, sizeof(aluno->endereco2.bairro), stdin);
     strcpy(aluno->endereco2.bairro, ajustarString(aluno->endereco2.bairro));
 
     printf("Digite a cidade 2 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco2.cidade, sizeof(aluno->endereco2.cidade), stdin);
     strcpy(aluno->endereco2.cidade, ajustarString(aluno->endereco2.cidade));
 
     printf("Digite o estado 2 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->endereco2.estado, sizeof(aluno->endereco2.estado), stdin);
     strcpy(aluno->endereco2.estado, ajustarString(aluno->endereco2.estado));
 
     printf("Digite o nome da materia 1 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->materia[0].nomeMateria, sizeof(aluno->materia[0].nomeMateria), stdin);
     strcpy(aluno->materia[0].nomeMateria, ajustarString(aluno->materia[0].nomeMateria));
 
@@ -425,6 +440,7 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     scanf("%f", &aluno->materia[0].mediaMateria);
 
     printf("Digite o nome da materia 2 do aluno:\n");
+    setbuf(stdin, NULL);
     fgets(aluno->materia[1].nomeMateria, sizeof(aluno->materia[1].nomeMateria), stdin);
     strcpy(aluno->materia[1].nomeMateria, ajustarString(aluno->materia[1].nomeMateria));
 
@@ -432,23 +448,25 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     scanf("%f", &aluno->materia[1].mediaMateria);
 
     printf("Digite o nome da materia 3 do aluno:\n");
-    fgets(materia[2].nomeMateria, sizeof(materia[2].nomeMateria), stdin);
-    strcpy(materia[2].nomeMateria, ajustarString(materia[2].nomeMateria));
-    scanf("%s", &aluno->materia[2].nomeMateria);
+    setbuf(stdin, NULL);
+    fgets(aluno->materia[2].nomeMateria, sizeof(aluno->materia[2].nomeMateria), stdin);
+    strcpy(aluno->materia[2].nomeMateria, ajustarString(aluno->materia[2].nomeMateria));
 
     printf("Digite a media da materia 3 do aluno:\n");
     scanf("%f", &aluno->materia[2].mediaMateria);
 
     printf("Digite o nome da materia 4 do aluno:\n");
-    fgets(materia[3].nomeMateria, sizeof(materia[3].nomeMateria), stdin);
-    strcpy(materia[3].nomeMateria, ajustarString(materia[3].nomeMateria));
+    setbuf(stdin, NULL);
+    fgets(aluno->materia[3].nomeMateria, sizeof(aluno->materia[3].nomeMateria), stdin);
+    strcpy(aluno->materia[3].nomeMateria, ajustarString(aluno->materia[3].nomeMateria));
 
     printf("Digite a media da materia 4 do aluno:\n");
     scanf("%f", &aluno->materia[3].mediaMateria);
 
     printf("Digite o nome da materia 5 do aluno:\n");
-    fgets(materia[4].nomeMateria, sizeof(materia[4].nomeMateria), stdin);
-    strcpy(materia[4].nomeMateria, ajustarString(materia[4].nomeMateria));
+    setbuf(stdin, NULL);
+    fgets(aluno->materia[4].nomeMateria, sizeof(aluno->materia[4].nomeMateria), stdin);
+    strcpy(aluno->materia[4].nomeMateria, ajustarString(aluno->materia[4].nomeMateria));
 
     printf("Digite a media da materia 5 do aluno:\n");
     scanf("%f", &aluno->materia[4].mediaMateria);
@@ -494,18 +512,6 @@ void menuRemoveAluno(ArrayDinamico *arrayDinamico)
     }
 }
 
-char *ajustarString(char *str)
-{ // metodo que peguei com o Jhom para evitar erros na hora de salvar as "strings" no array
-    int tamanho = strlen(str);
-
-    if (str[tamanho - 1] == '\n')
-    {
-        str[tamanho - 1] = '\0';
-    }
-
-    return str;
-}
-
 void main(int argc, char *argv[]) // metodo principal
 {
     ArrayDinamico *arrayDinamico = criaArryaDinamico(4, false); // cria o ponteiro de Array Dinamico
@@ -530,6 +536,7 @@ void main(int argc, char *argv[]) // metodo principal
         printf("| 5 - Checar tamanho e quantidade do vetor. |\n");
         printf("| 6 - Sair.                                 |\n");
         printf(" -------------------------------------------\n");
+        setbuf(stdin, NULL);
         scanf("%d", &escolha);
         switch (escolha)
         {
@@ -550,13 +557,12 @@ void main(int argc, char *argv[]) // metodo principal
             break;
         case 6: // destroi o array dinamico e apaga ele da memoria e sai do programa
             gravarArquivo(arrayDinamico, caminhoArquivo);
-            destroiArrayDinamico(arrayDinamico);
+            destroiArrayDinamico(&arrayDinamico);
             printf("\nSaindo...\n");
             exit(1);
             break;
         default: // default
             system("cls");
-            system("clear");
             printf("\nEssa opcao nao existe!\n");
             break;
         }
