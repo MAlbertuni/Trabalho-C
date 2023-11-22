@@ -159,7 +159,7 @@ void ordenaArray(void **array, int p, int r, int (*compare)(const void *, const 
 
 void imprimeArray(ArrayDinamico *arrayDinamico, int qtdInfo) // fiz o parametro qtdInfo para simplificar na hora de buscar ou remover, apenas quando pela opcao do menu for selecionado imprimir alunos ele imprime todas as informacoes
 {
-    system("cls");
+    
 
     ordenaArray((void **)arrayDinamico->ptr_dados, 0, arrayDinamico->quantidade - 1, comparaAlunoNome); // ordena antes de imprimir
     printf("Imprimindo alunos:\n");
@@ -304,8 +304,7 @@ void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo) // grava 
     // Escreve os dados dos alunos no arquivo
     for (i = 0; i < arrayDinamico->quantidade; i++)
     {
-        printf("Entrou");
-        fwrite(&arrayDinamico->ptr_dados[i], sizeof(Aluno), 1, file);
+        fwrite(arrayDinamico->ptr_dados[i], sizeof(Aluno), 1, file);
     }
 
     fclose(file); // Fecha o arquivo
@@ -313,7 +312,7 @@ void gravarArquivo(ArrayDinamico *arrayDinamico, char *caminhoArquivo) // grava 
 
 void imprimeAluno(Aluno *aluno)
 {
-    system("cls");
+    
 
     if (aluno != NULL)
     {
@@ -358,8 +357,6 @@ char *ajustarString(char *str)
 
 void menuCriarAluno(ArrayDinamico *arrayDinamico)
 {
-    system("cls");
-
     Aluno *aluno = (Aluno *)malloc(1 * sizeof(Aluno *)); // cria aluno
     int raAluno;
 
@@ -382,6 +379,7 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
         return;
     }
 
+    
     printf("Digite a data de nascimento do aluno:\n");
     scanf("%s", &aluno->dataNascimento);
 
@@ -471,6 +469,7 @@ void menuCriarAluno(ArrayDinamico *arrayDinamico)
     printf("Digite a media da materia 5 do aluno:\n");
     scanf("%f", &aluno->materia[4].mediaMateria);
 
+
     adicionarArray(arrayDinamico, aluno); // adiciona o ponteiro do aluno dentro do array dinamico
 
     printf("\nAluno adicionado com sucesso!\n");
@@ -536,7 +535,6 @@ void main(int argc, char *argv[]) // metodo principal
         printf("| 5 - Checar tamanho e quantidade do vetor. |\n");
         printf("| 6 - Sair.                                 |\n");
         printf(" -------------------------------------------\n");
-        setbuf(stdin, NULL);
         scanf("%d", &escolha);
         switch (escolha)
         {
@@ -562,7 +560,7 @@ void main(int argc, char *argv[]) // metodo principal
             exit(1);
             break;
         default: // default
-            system("cls");
+            
             printf("\nEssa opcao nao existe!\n");
             break;
         }
